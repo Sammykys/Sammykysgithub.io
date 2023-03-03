@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<head>
+<script src="/assets/jquery.js"></script>
+<link href='https://fonts.googleapis.com/css?family=Londrina+Shadow' rel='stylesheet' type='text/css'>
+<style>
+body {
+  font-family: helvetica, sans-serif;
+  margin: 0 auto;
+  max-width: 600px;
+  background: #248152;
+}
+
+div {
+  height: 200px;
+  background-size: cover;
+  position: relative;
+  margin: 40px 0 0 0;
+  border-radius: 12px;
+}
+
+input {
+	font-size: 22px;
+}
+
+h1 {
+  font-family: 'Londrina Shadow', cursive;
+  text-align: center;
+  font-size: 75px;
+  color: #aaaaaa;
+  margin: 60px 0 0 0;
+  p
+  
+}
+h2 {
+  text-align: center;
+  color: #aaaaaa;
+  margin: 0px 0 70px 0;
+  }
+p {
+  color: rgba(255,255,255);
+  background: grey;
+  background: linear-gradient(bottom, rgba(0,0,0,1), rgba(0,0,0,.4));
+  background: -webkit-linear-gradient(bottom, rgba(0,0,0,1), rgba(0,0,0,.
+  ));
+  background: -moz-linear-gradient(bottom, rgba(0,0,0,1), rgba(0,0,0,.4));
+  padding: 10px;
+  line-height: 28px;
+  text-align: justify;
+  position: absolute;
+  bottom: 0;
+  margin: 0;
+  height: 30px;
+  transition: height .5s;
+  -webkit-transition: height .5s;
+  -moz-transition: height .5s;
+  }
+small {
+  opacity: 0;
+  }
+.show-description p {
+  height: 150px;
+  }
+.show-description small {
+  opacity: 1;
+  }
+.first{
+  background-image: url("https://numpaint.com/wp-content/uploads/2020/10/Killua-zoldyck-Hunter-x-Hunter-paint-by-numbers.jpg");
+  }
+.second{
+  background-image: url("https://en.datosjam.net.pe/wp-content/uploads/2022/07/portada_hunter-x-hunter-18-780x470.jpg");
+  }
+.dessert{
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSooWK3_bcmcd7123NdvPUDcjkmags8hOPxpg&usqp=CAU");
+  }
+.price {
+  float: right;
+  }
+@media (max-width: 500px) {
+  h1 {
+    font-size: 50px;
+    margin-top: 20px;
+    line-height: 40px;
+    }
+  h2 {
+    font-size: 20px;
+    margin: 20px 0 30px 0;
+    }
+  div {
+    margin: 20px 12px 0 12px;
+  }
+  p {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  small {
+    font-size: 16px;
+  }
+}
+
+
+</style>
+
+</head>
+
+<body>
+<h1>HunterXHunter</h1>
+<h2>Gon and his friends</h2>
+
+
+<div class="first">
+<input class="quantities" type="number" min="0" style="width: 50px">	
+<p>Killua Zoldyck <span class="price">$30000</span><br />
+  <small>He's an assassin and his family is really bad expect alluka but his family hates alluka i thin k ts been a while since ive seen the anime </small></p>
+  </div>
+  
+
+<div class="second">
+	<input class="quantities" type="number" min="0" style="width: 50px">
+  <p>Kurapika  <span class="price">$20000</span><br />
+  <small>Kurapika hates spiders, kurapika is honestly ije og the bes characters (sasuke is the ripoff of him)jdfhbshdkjkjhsdbbfhvbdskfhkdhbfhbjsdhbvhjdfbghvgd</small></p>
+</div>
+
+  
+<div class="dessert">
+	<input class="quantities" type="number" min="0" style="width: 50px">
+  <p>Leorio <span class="price">$10000</span><br />
+  <small>Leorio is such a good character, he deserves for reconition brohe also wants to be a doctor to help others cuz he couldn,t help his friedn</small></p>
+</div>
+
+<br><br>
+<input id="Name" placeholder="Your name">
+  <input type="email" id="Email" placeholder="Your email">
+<input type="submit" id="submit">
+<br><br>
+
+
+<script>
+  $('div').on('click', function() {
+      $(this).toggleClass('show-description');
+  });
+</script>
+
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+	
+
+	
+	
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+  	import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyASyVViXt8WgaGiLAA1yn3KzyHe4k90ZQY",
+    authDomain: "esbftf6b.firebaseapp.com",
+    projectId: "esbftf6b",
+    storageBucket: "esbftf6b.appspot.com",
+    messagingSenderId: "355801759202",
+    appId: "1:355801759202:web:b9c37f46d1f2870f498dbb"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  
+const Name =document.querySelector("#Name")
+  const Email =document.querySelector("#Email")
+  document.querySelector('#submit').addEventListener('click',Submit)
+  const prices = document.querySelectorAll(".price")
+const quantities = document.querySelectorAll(".quantities") 
+const itemsList = ["Killua", "Kurapika", "Leorio"]
+  
+  
+  function Submit() {
+  	  const timestamp = buildTimestamp()
+	  
+	  let total = 0
+	  let cart = { }
+	  for  (let i=0; i<quantities.length; i=i+1) {
+	  	if (quantities[i].value != "0" && quantities[i].value != "") {	
+             let price = prices[i].innerHTML.replace('$', '')
+			  total = total + quantities[i].value * price 
+			
+	  		cart[itemsList[i]] = parseInt(quantities[i].value) 
+	  	}
+	  	quantities[i].value = ""
+	  }
+	  
+	  
+  	  set(ref(db, timestamp), {
+  		  Name: Name.value,
+  	      email: Email.value,
+		  cart: cart,
+          totalPrice: total,
+		  paid: "not yet",
+		  
+  	  });
+
+  	  Name.value = ""
+  	  Email.value = ""
+  	}
+	
+
+	function buildTimestamp() {
+		  const now = new Date();
+		  let timestamp = now.getFullYear().toString() + "/";
+		  //const month = now.toLocaleString('default', { month: 'long' });
+
+		  let month = now.getMonth()+1   //add 1 because Javascript uses 0 for January
+		  month = month.toString()
+		  month = addLeadingZero(month)
+		  timestamp += month + "/"; 
+
+		  let date = now.getDate().toString()
+		  date = addLeadingZero(date)
+		  timestamp += date + "/";
+
+		  let hours = now.getHours().toString()
+		  hours = addLeadingZero(hours)
+		  timestamp += hours + ":";
+
+		  let minutes = now.getMinutes().toString()
+		  minutes = addLeadingZero(minutes)
+		  timestamp += minutes + ":";
+
+		  let seconds = now.getSeconds().toString()
+		  seconds = addLeadingZero(seconds)
+		  timestamp += seconds;
+  
+		  return timestamp
+		}
+	
+		function addLeadingZero(units) {
+			if (units.length < 2) {
+				units = "0" + units
+			}
+			return units
+		}
+  
+
+
+  
+</script>
+
+
+
+</body>
